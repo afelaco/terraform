@@ -1,7 +1,7 @@
 variable "project_name" {
   description = "Prefix for resource names"
   type        = string
-  default     = "home-automation"
+  default     = "homeauto"
 }
 
 variable "location" {
