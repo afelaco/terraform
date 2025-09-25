@@ -1,4 +1,4 @@
-name: Terraform Plan
+name: Plan Terraform Changes
 
 on:
   pull_request:
@@ -6,13 +6,13 @@ on:
       - main
 
 jobs:
-  terraform:
-    name: Terraform Plan
+  terraform-plan:
+    name: Plan Terraform Changes
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -29,3 +29,8 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
+
+      - name: Upload Terraform Plan as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfplan
