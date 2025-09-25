@@ -44,6 +44,7 @@ jobs:
     name: Apply Terraform Changes
     needs: terraform-plan
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
