@@ -13,19 +13,13 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = "LRS"
 }
 
-resource "azurerm_storage_container" "container" {
-  name                  = "parquet-files"
-  storage_account_name  = azurerm_storage_account.storage.name
-  container_access_type = "private"
-}
-
 # Key Vault
 resource "azurerm_key_vault" "kv" {
-  name                        = "${var.project_name}-kv"
-  location                    = azurerm_resource_group.rg.location
-  resource_group_name         = azurerm_resource_group.rg.name
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  sku_name                    = "standard"
+  name                = "${var.project_name}-kv"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  sku_name            = "standard"
 
   # Access policy for the current user
   access_policy {
