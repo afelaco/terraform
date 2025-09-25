@@ -19,15 +19,15 @@ jobs:
         with:
           terraform_version: 1.13.3
 
-      - name: Azure Login
+      - name: Login to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Terraform Init
+      - name: Initialize Terraform
         run: terraform init
 
-      - name: Terraform Plan
+      - name: Plan Terraform Changes
         run: terraform plan -input=false -out=tfplan
 
       - name: Upload Terraform Plan as Artifact
