@@ -12,56 +12,33 @@ terraform {
 }
 
 # Resource Group
-resource "azurerm_resource_group" "rg" {
+module "rg" {
+  source   = "./modules/resource_group"
   name     = "${var.project_name}-rg"
   location = var.location
 }
 
-# Terraform Backend Storage Account
-resource "azurerm_storage_account" "tf" {
-  name                     = "${var.project_name}tf"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+# Terraform Backend Infrastructure
+module "tf" {
+  source              = "./modules/terraform_backend"
+  name                = "${var.project_name}tf"
+  resource_group_name = module.rg.name
+  location            = module.rg.name
 }
 
 # Storage Account
-resource "azurerm_storage_account" "sa" {
-  name                     = "${var.project_name}sa"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
-# Container
-resource "azurerm_storage_container" "tfstate" {
-  name                 = "tfstate"
-  storage_account_name = azurerm_storage_account.tf.name
-}
-
-resource "azurerm_storage_container" "steam" {
-  name                 = "steam"
-  storage_account_name = azurerm_storage_account.sa.name
+module "sa" {
+  source              = "./modules/storage_account"
+  name                = "${var.project_name}sa"
+  resource_group_name = module.rg.name
+  location            = module.rg.name
 }
 
 # Key Vault
-resource "azurerm_key_vault" "kv" {
+module "kv" {
+  source              = "./modules/key_vault"
   name                = "${var.project_name}-kv"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = var.user_object_id
-    secret_permissions = [
-      "Get",
-      "List",
-      "Set",
-      "Delete",
-    ]
-  }
+  resource_group_name = module.rg.name
+  location            = module.rg.location
 }
