@@ -23,7 +23,7 @@ module "tf" {
   source              = "./modules/terraform_backend"
   name                = "${var.project_name}tf"
   resource_group_name = module.rg.name
-  location            = module.rg.name
+  location            = module.rg.location
 }
 
 # Storage Account
@@ -31,7 +31,7 @@ module "sa" {
   source              = "./modules/storage_account"
   name                = "${var.project_name}sa"
   resource_group_name = module.rg.name
-  location            = module.rg.name
+  location            = module.rg.location
 }
 
 # Key Vault
