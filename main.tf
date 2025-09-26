@@ -32,7 +32,7 @@ resource "azurerm_key_vault" "kv" {
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = var.object_id.user
+    object_id = var.user_object_id
     secret_permissions = [
       "Get",
       "List",

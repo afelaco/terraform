@@ -10,18 +10,8 @@ variable "location" {
   default     = "northeurope"
 }
 
-variable "object_id" {
-  description = "Object ID of the user or service principal"
-  type = list(
-    object(
-      {
-        user = string
-      }
-    )
-  )
-  default = [
-    {
-      user = "0a909171-669b-492b-bd9b-c1f777a42f23"
-    }
-  ]
+variable "user_object_id" {
+  description = "Object ID of the user"
+  type        = string
+  default     = "0a909171-669b-492b-bd9b-c1f777a42f23"
 }
