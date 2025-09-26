@@ -10,8 +10,18 @@ variable "location" {
   default     = "northeurope"
 }
 
-# variable "sql_admin_password" {
-#   description = "SQL admin password"
-#   type        = string
-#   sensitive   = true
-# }
+variable "object_id" {
+  description = "Object ID of the user or service principal"
+  type = list(
+    object(
+      {
+        user = string
+      }
+    )
+  )
+  default = [
+    {
+      user = "0a909171-669b-492b-bd9b-c1f777a42f23"
+    }
+  ]
+}

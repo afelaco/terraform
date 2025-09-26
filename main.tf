@@ -1,3 +1,6 @@
+# Get current client details
+data "azurerm_client_config" "current" {}
+
 # Resource Group
 resource "azurerm_resource_group" "rg" {
   name     = "${var.project_name}-rg"
@@ -5,12 +8,18 @@ resource "azurerm_resource_group" "rg" {
 }
 
 # Storage Account
-resource "azurerm_storage_account" "storage" {
+resource "azurerm_storage_account" "sa" {
   name                     = "${var.project_name}sa"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+}
+
+# Container
+resource "azurerm_storage_container" "container" {
+  name               = "steam"
+  storage_account_id = azurerm_storage_account.sa.id
 }
 
 # Key Vault
@@ -21,11 +30,9 @@ resource "azurerm_key_vault" "kv" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "standard"
 
-  # Access policy for the current user
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
-
+    object_id = var.object_id.user
     secret_permissions = [
       "Get",
       "List",
@@ -34,13 +41,3 @@ resource "azurerm_key_vault" "kv" {
     ]
   }
 }
-
-# Store a secret (SQL password, for instance)
-# resource "azurerm_key_vault_secret" "sql_admin_password" {
-#   name         = "sql-admin-password"
-#   value        = var.sql_admin_password
-#   key_vault_id = azurerm_key_vault.kv.id
-# }
-
-# Get current client details (needed for Key Vault access policy)
-data "azurerm_client_config" "current" {}
