@@ -9,9 +9,3 @@ variable "location" {
   type        = string
   default     = "northeurope"
 }
-
-# variable "sql_admin_password" {
-#   description = "SQL admin password"
-#   type        = string
-#   sensitive   = true
-# }

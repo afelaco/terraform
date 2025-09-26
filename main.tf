@@ -1,46 +1,44 @@
+# Get current client details
+data "azurerm_client_config" "current" {}
+
+# Terraform Backend Configuration
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "homeauto-rg"
+    storage_account_name = "homeautotf"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
+}
+
 # Resource Group
-resource "azurerm_resource_group" "rg" {
+module "rg" {
+  source   = "./modules/resource_group"
   name     = "${var.project_name}-rg"
   location = var.location
 }
 
+# Terraform Backend Infrastructure
+module "tf" {
+  source              = "./modules/terraform_backend"
+  name                = "${var.project_name}tf"
+  resource_group_name = module.rg.name
+  location            = module.rg.location
+}
+
 # Storage Account
-resource "azurerm_storage_account" "storage" {
-  name                     = "${var.project_name}sa"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+module "sa" {
+  source              = "./modules/storage_account"
+  name                = "${var.project_name}sa"
+  resource_group_name = module.rg.name
+  location            = module.rg.location
 }
 
 # Key Vault
-resource "azurerm_key_vault" "kv" {
+module "kv" {
+  source              = "./modules/key_vault"
   name                = "${var.project_name}-kv"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
-
-  # Access policy for the current user
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
-
-    secret_permissions = [
-      "Get",
-      "List",
-      "Set",
-      "Delete",
-    ]
-  }
+  resource_group_name = module.rg.name
+  location            = module.rg.location
 }
-
-# Store a secret (SQL password, for instance)
-# resource "azurerm_key_vault_secret" "sql_admin_password" {
-#   name         = "sql-admin-password"
-#   value        = var.sql_admin_password
-#   key_vault_id = azurerm_key_vault.kv.id
-# }
-
-# Get current client details (needed for Key Vault access policy)
-data "azurerm_client_config" "current" {}
