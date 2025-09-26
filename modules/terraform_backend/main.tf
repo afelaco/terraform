@@ -1,8 +1,8 @@
 # Storage Account
 resource "azurerm_storage_account" "tf" {
-  name                = var.name
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  name                     = var.name
+  resource_group_name      = var.resource_group_name
+  location                 = var.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
