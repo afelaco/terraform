@@ -8,7 +8,7 @@ resource "azurerm_storage_account" "tf" {
 }
 
 # Container
-resource "azurerm_storage_container" "steam" {
+resource "azurerm_storage_container" "tfstate" {
   name                 = "tfstate"
   storage_account_name = azurerm_storage_account.tf.name
 }
