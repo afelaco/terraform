@@ -18,8 +18,8 @@ resource "azurerm_storage_account" "sa" {
 
 # Container
 resource "azurerm_storage_container" "container" {
-  name               = "steam"
-  storage_account_id = azurerm_storage_account.sa.id
+  name                 = "steam"
+  storage_account_name = azurerm_storage_account.sa.name
 }
 
 # Key Vault
