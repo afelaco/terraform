@@ -1,6 +1,7 @@
 # Get current client details
 data "azurerm_client_config" "current" {}
 
+
 # Terraform Backend Configuration
 terraform {
   backend "azurerm" {
@@ -12,35 +13,35 @@ terraform {
 }
 
 # Resource Group
-module "rg" {
+module "resource_group" {
   source   = "./modules/resource_group"
   name     = "${var.project_name}-rg"
   location = var.location
 }
 
 # Terraform Backend Infrastructure
-module "tf" {
+module "terraform_backend" {
   source              = "./modules/terraform_backend"
-  name                = "${var.project_name}tf"
-  resource_group_name = module.rg.name
-  location            = module.rg.location
+  storage_account_name                = "${var.project_name}tf"
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
 }
 
-# Storage Accounts for different layers
-module "sa" {
+# Storage Account
+module "storage_account" {
   for_each = toset(var.layer)
 
   source               = "./modules/storage_account"
   storage_account_name = "${var.project_name}${each.key}sa"
-  resource_group_name  = module.rg.name
-  location             = module.rg.location
+  resource_group_name  = module.resource_group.name
+  location             = module.resource_group.location
 }
 
 # Key Vault
-module "kv" {
+module "key_vault" {
   source              = "./modules/key_vault"
   name                = "${var.project_name}-kv"
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  resource_group_name = module.rg.name
-  location            = module.rg.location
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
 }
