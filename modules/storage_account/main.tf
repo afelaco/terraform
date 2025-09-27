@@ -1,6 +1,6 @@
 # Storage Account
 resource "azurerm_storage_account" "sa" {
-  name                     = var.name
+  name                     = var.storage_account_name
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = "Standard"
@@ -8,7 +8,9 @@ resource "azurerm_storage_account" "sa" {
 }
 
 # Container
-resource "azurerm_storage_container" "steam" {
-  name                 = "steam"
+resource "azurerm_storage_container" "container" {
+  for_each = toset(var.container_name)
+
+  name                 = each.key
   storage_account_name = azurerm_storage_account.sa.name
 }
