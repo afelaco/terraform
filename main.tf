@@ -19,7 +19,7 @@ module "rg" {
 }
 
 # Terraform Backend Infrastructure
-module "tf" {
+module "tf_backend" {
   source              = "./modules/terraform_backend"
   name                = "${var.project_name}tf"
   resource_group_name = module.rg.name

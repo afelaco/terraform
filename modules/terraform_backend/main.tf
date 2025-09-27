@@ -1,5 +1,5 @@
 # Storage Account
-resource "azurerm_storage_account" "tf" {
+resource "azurerm_storage_account" "this" {
   name                     = var.name
   resource_group_name      = var.resource_group_name
   location                 = var.location
@@ -8,7 +8,7 @@ resource "azurerm_storage_account" "tf" {
 }
 
 # Container
-resource "azurerm_storage_container" "tfstate" {
+resource "azurerm_storage_container" "this" {
   name                 = "tfstate"
-  storage_account_name = azurerm_storage_account.tf.name
+  storage_account_name = azurerm_storage_account.this.name
 }
