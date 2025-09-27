@@ -26,12 +26,14 @@ module "tf" {
   location            = module.rg.location
 }
 
-# Storage Account
+# Storage Accounts for different layers
 module "sa" {
-  source              = "./modules/storage_account"
-  name                = "${var.project_name}sa"
-  resource_group_name = module.rg.name
-  location            = module.rg.location
+  for_each = toset(var.layer)
+
+  source               = "./modules/storage_account"
+  storage_account_name = "${var.project_name}${each.key}sa"
+  resource_group_name  = module.rg.name
+  location             = module.rg.location
 }
 
 # Key Vault

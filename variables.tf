@@ -9,3 +9,9 @@ variable "location" {
   type        = string
   default     = "northeurope"
 }
+
+variable "layer" {
+  description = "List of storage account layers"
+  type        = list(string)
+  default     = ["bronze", "silver", "gold"]
+}
