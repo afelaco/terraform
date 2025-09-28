@@ -24,6 +24,7 @@ resource "azurerm_key_vault" "this" {
     tenant_id = var.tenant_id
     object_id = var.sp_object_id
     secret_permissions = [
+      "Get",
       "Set",
     ]
   }
