@@ -32,8 +32,9 @@ module "sa" {
 
   source                   = "./modules/storage_account"
   storage_account_name     = "${var.project_name}${each.key}sa"
-  resource_group_name      = module.rg.resource_group_name
   storage_account_location = module.rg.resource_group_location
+  resource_group_name      = module.rg.resource_group_name
+  key_vault_id             = module.kv.key_vault_id
 }
 
 # Key Vault
