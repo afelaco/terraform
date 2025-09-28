@@ -4,6 +4,73 @@ This repository contains Terraform configurations to provision and manage Azure 
 
 ---
 
+## Setup Service Principal & Azure Credentials for Terraform
+
+Before Terraform can manage Azure resources, a `terraform-sp` Service Principal (SP) needs to be created with the
+necessary permissions. To login to Azure CLI, use the following command:
+
+```bash
+az login
+```
+
+Follow the instructions in the terminal to select the correct subscription, or run:
+
+```bash
+az account set --subscription "<SUBSCRIPTION_ID>"
+```
+
+To create a Service Principal named `terraform-sp` within the current subscription, use the
+following command in the Azure CLI:
+
+```bash
+SP_NAME="terraform-sp"
+ROLE="Contributor"
+SCOPE="/subscriptions/<SUBSCRIPTION_ID>"
+
+az ad sp create-for-rbac \
+    --name "$SP_NAME" \
+    --role "$ROLE" \
+    --scopes "$SCOPE" \
+    --sdk-auth
+```
+
+`--sdk-auth` outputs a JSON file in the format Terraform expects it as `AZURE_CREDENTIALS` in GitHub Actions. Do not
+include these credentials in the code or check the credentials into source control!
+
+The output will look something like this:
+
+```json
+{
+  "clientId": "<YOUR_CLIENT_ID>",
+  "clientSecret": "<YOUR_CLIENT_SECRET>",
+  "subscriptionId": "<YOUR_SUBSCRIPTION_ID>",
+  "tenantId": "<YOUR_TENANT_ID>",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.azure.com/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
+```
+
+> The client secret will only be shown once, so make sure to copy it locally to later store it as a
+`TERRAFORM-SP-CLIENT-SECRET` secret in the Azure
+> Key Vault!
+
+Copy the JSON and set it as a GitHub secret named `AZURE_CREDENTIALS`. This secret can be used in GitHub Actions
+workflows
+to authenticate Terraform with Azure:
+
+```yaml
+  - name: Login to Azure
+    uses: azure/login@v1
+    with:
+      creds: ${{ secrets.AZURE_CREDENTIALS }}
+```
+
+---
+
 ## Setup & Migrate Terraform State to Remote Backend
 
 The initial `main.tf` file is set up to run Terraform locally. This file will include the storage account and container
