@@ -11,6 +11,7 @@ resource "azurerm_postgresql_flexible_server" "this" {
   version                = "14"
   administrator_login    = var.postgres_database_admin_username
   administrator_password = random_password.this.result
+  zone                   = "1"
 
   storage_mb   = 32768
   storage_tier = "P4"
