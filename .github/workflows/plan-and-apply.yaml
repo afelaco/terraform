@@ -1,5 +1,8 @@
 name: Plan & Apply Terraform Changes
 
+env:
+  TERRAFORM_VERSION: 1.13.3
+
 on:
   pull_request:
     branches:
@@ -19,7 +22,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.13.3
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
 
       - name: Check Formatting
         run: terraform fmt -check
@@ -55,7 +58,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.13.3
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
 
       - name: Login to Azure
         uses: azure/login@v1
