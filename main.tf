@@ -44,3 +44,14 @@ module "kv" {
   resource_group_name = module.rg.name
   location            = module.rg.location
 }
+
+# PostgreSQL Flexible Server
+module "postgres" {
+  source                       = "./modules/postgres"
+  postgres_server_name         = "${var.project_name}-psql"
+  resource_group_name          = module.rg.name
+  location                     = module.rg.location
+  administrator_login          = var.postgres_admin_username
+  administrator_login_password = var.postgres_admin_password
+  postgres_database_name       = "${var.project_name}_db"
+}
