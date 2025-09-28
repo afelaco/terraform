@@ -26,7 +26,7 @@ resource "azurerm_postgresql_flexible_server_database" "this" {
 }
 
 # Store the admin username and password in Azure Key Vault
-resource "azurerm_key_vault_secret" "pg_admin" {
+resource "azurerm_key_vault_secret" "pg_admin_username" {
   name         = "${upper(azurerm_postgresql_flexible_server.this.name)}-ADMIN-USERNAME"
   value        = azurerm_postgresql_flexible_server.this.administrator_login
   key_vault_id = var.key_vault_id

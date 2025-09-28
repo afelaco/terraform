@@ -15,7 +15,7 @@ resource "azurerm_storage_container" "this" {
 }
 
 # Store the storage account key in Azure Key Vault
-resource "azurerm_key_vault_secret" "storage_account_key" {
+resource "azurerm_key_vault_secret" "this" {
   name         = "${upper(azurerm_storage_account.this.name)}-KEY"
   value        = azurerm_storage_account.this.primary_access_key
   key_vault_id = var.key_vault_id
