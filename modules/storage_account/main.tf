@@ -7,7 +7,7 @@ resource "azurerm_storage_account" "this" {
 }
 
 resource "azurerm_storage_container" "this" {
-  for_each = toset(var.container_name)
+  for_each = toset(["steam"])
 
   name               = each.key
   storage_account_id = azurerm_storage_account.this.id

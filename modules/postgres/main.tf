@@ -15,14 +15,13 @@ resource "azurerm_postgresql_flexible_server" "this" {
   resource_group_name    = var.resource_group_name
   location               = var.postgres_server_location
   version                = "14"
-  administrator_login    = "admin"
+  administrator_login    = var.postgres_server_admin
   administrator_password = random_password.this.result
-  zone                   = "3"
 
-  storage_mb   = 32768
-  storage_tier = "P30"
+  storage_mb   = 5120
+  storage_tier = "Standard"
 
-  sku_name = "GP_Standard_D4s_v3"
+  sku_name = "B_Standard_B1ms"
 }
 
 resource "azurerm_postgresql_flexible_server_database" "this" {

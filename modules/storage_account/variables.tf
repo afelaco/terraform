@@ -13,8 +13,3 @@ variable "storage_account_location" {
   type        = string
 }
 
-variable "container_name" {
-  description = "List of storage container names to create within the storage account."
-  type        = list(string)
-  default     = ["steam"]
-}
