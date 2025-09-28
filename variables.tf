@@ -15,3 +15,8 @@ variable "layer" {
   type        = list(string)
   default     = ["bronze", "silver", "gold"]
 }
+
+variable "external_secrets" {
+  description = "Map of external secrets to store in Key Vault"
+  type        = map(string)
+}
