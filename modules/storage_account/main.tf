@@ -9,6 +9,6 @@ resource "azurerm_storage_account" "this" {
 resource "azurerm_storage_container" "this" {
   for_each = toset(["steam"])
 
-  name               = each.key
+  name                 = each.key
   storage_account_name = azurerm_storage_account.this.name
 }
