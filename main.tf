@@ -26,6 +26,16 @@ module "tf_backend" {
   storage_account_location = module.rg.resource_group_location
 }
 
+# Key Vault
+module "kv" {
+  source              = "./modules/key_vault"
+  key_vault_name      = "${var.project_name}-kv"
+  key_vault_location  = module.rg.resource_group_location
+  resource_group_name = module.rg.resource_group_name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  sp_object_id        = data.azurerm_client_config.current.object_id
+}
+
 # Storage Accounts
 module "sa" {
   for_each = toset(var.layer)
@@ -35,16 +45,6 @@ module "sa" {
   storage_account_location = module.rg.resource_group_location
   resource_group_name      = module.rg.resource_group_name
   key_vault_id             = module.kv.key_vault_id
-}
-
-# Key Vault
-module "kv" {
-  source              = "./modules/key_vault"
-  key_vault_name      = "${var.project_name}-kv"
-  key_vault_location  = module.rg.resource_group_location
-  resource_group_name = module.rg.resource_group_name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sp_object_id        = data.azurerm_client_config.current.object_id
 }
 
 # PostgreSQL Flexible Server
