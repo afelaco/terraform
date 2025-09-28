@@ -21,7 +21,6 @@ variable "tenant_id" {
 variable "user_object_id" {
   description = "The Object ID of the user or service principal to assign access policies."
   type        = string
-  default     = "0a909171-669b-492b-bd9b-c1f777a42f23"
 }
 
 variable "sp_object_id" {

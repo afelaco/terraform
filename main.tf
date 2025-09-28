@@ -1,6 +1,3 @@
-# Get current client details
-data "azurerm_client_config" "current" {}
-
 # Terraform Backend Configuration
 terraform {
   backend "azurerm" {
@@ -32,8 +29,9 @@ module "kv" {
   key_vault_name      = "${var.project_name}-kv"
   key_vault_location  = module.rg.resource_group_location
   resource_group_name = module.rg.resource_group_name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sp_object_id        = data.azurerm_client_config.current.object_id
+  tenant_id           = var.tenant_id
+  user_object_id      = var.user_object_id
+  sp_object_id        = var.sp_object_id
   external_secrets    = var.external_secrets
 }
 
