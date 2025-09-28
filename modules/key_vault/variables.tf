@@ -28,3 +28,9 @@ variable "sp_object_id" {
   description = "The Object ID of the user or service principal to assign access policies."
   type        = string
 }
+
+variable "external_secrets" {
+  type        = map(string)
+  description = "All external secrets to sync to Key Vault"
+}
+

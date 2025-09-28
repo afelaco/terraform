@@ -36,7 +36,9 @@ jobs:
         run: terraform init
 
       - name: Plan Terraform Changes
-        run: terraform plan -input=false -out=tfplan
+        env:
+          EXTERNAL_SECRETS: ${{ secrets.EXTERNAL_SECRETS }}
+        run: terraform plan -var="external_secrets=$env.EXTERNAL_SECRETS" -input=false -out=tfplan
 
       - name: Upload Terraform Plan as Artifact
         if: github.event_name == 'push'
@@ -76,3 +78,9 @@ jobs:
 
       - name: Apply Terraform Changes
         run: terraform apply -input=false tfplan
+
+      - name: Terraform Apply
+        env:
+          EXTERNAL_SECRETS: ${{ secrets.EXTERNAL_SECRETS }}
+        run: |
+          terraform apply -var="external_secrets=$EXTERNAL_SECRETS" -input=false tfplan
