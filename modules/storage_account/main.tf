@@ -1,7 +1,8 @@
 resource "azurerm_storage_account" "this" {
-  name                     = var.storage_account_name
-  resource_group_name      = var.resource_group_name
-  location                 = var.storage_account_location
+  name                = var.storage_account_name
+  location            = var.storage_account_location
+  resource_group_name = var.resource_group_name
+
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
@@ -11,4 +12,11 @@ resource "azurerm_storage_container" "this" {
 
   name                 = each.key
   storage_account_name = azurerm_storage_account.this.name
+}
+
+# Store the storage account key in Azure Key Vault
+resource "azurerm_key_vault_secret" "storage_account_key" {
+  name         = "${upper(azurerm_storage_account.this.name)}-KEY"
+  value        = azurerm_storage_account.this.primary_access_key
+  key_vault_id = var.key_vault_id
 }

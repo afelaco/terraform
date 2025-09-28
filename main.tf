@@ -48,10 +48,9 @@ module "kv" {
 # PostgreSQL Flexible Server
 module "postgres" {
   source                   = "./modules/postgres"
-  key_vault_id             = module.kv.key_vault_id
   postgres_server_name     = "${var.project_name}-psql"
-  resource_group_name      = module.rg.resource_group_name
   postgres_server_location = module.rg.resource_group_location
-  postgres_server_admin    = "${var.project_name}-admin"
+  resource_group_name      = module.rg.resource_group_name
   postgres_database_name   = "${var.project_name}_db"
+  key_vault_id             = module.kv.key_vault_id
 }
