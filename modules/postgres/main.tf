@@ -6,10 +6,10 @@ resource "random_password" "this" {
 
 resource "azurerm_postgresql_flexible_server" "this" {
   name                   = var.postgres_server_name
-  resource_group_name    = var.resource_group_name
   location               = var.postgres_server_location
+  resource_group_name    = var.resource_group_name
   version                = "14"
-  administrator_login    = "${azurerm_postgresql_flexible_server.this.name}-admin"
+  administrator_login    = var.postgres_database_admin_username
   administrator_password = random_password.this.result
 
   storage_mb   = 32768

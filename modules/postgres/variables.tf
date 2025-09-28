@@ -13,6 +13,11 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "postgres_database_admin_username" {
+  description = "The administrator username for the PostgreSQL Flexible Server"
+  type        = string
+}
+
 variable "postgres_database_name" {
   description = "The name of the PostgreSQL database to create"
   type        = string
