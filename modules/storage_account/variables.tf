@@ -8,7 +8,7 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "location" {
+variable "storage_account_location" {
   description = "The Azure region where the storage account will be created."
   type        = string
 }

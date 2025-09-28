@@ -8,17 +8,17 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "location" {
+variable "postgres_server_location" {
   description = "The Azure region where the PostgreSQL Flexible Server will be created"
   type        = string
 }
 
-variable "administrator_login" {
+variable "postgres_server_admin_username" {
   description = "The administrator username for the PostgreSQL Flexible Server"
   type        = string
 }
 
-variable "administrator_login_password" {
+variable "postgres_server_admin_password" {
   description = "The administrator password for the PostgreSQL Flexible Server"
   type        = string
   sensitive   = true

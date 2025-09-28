@@ -1,29 +1,20 @@
 resource "azurerm_postgresql_flexible_server" "this" {
-  name                = var.postgres_server_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  version             = "15"
-  sku_name            = "Standard_B1ms"
-  storage_mb          = 32768
+  name                          = var.postgres_server_name
+  resource_group_name           = var.resource_group_name
+  location                      = var.postgres_server_location
+  version                       = "12"
+  delegated_subnet_id           = azurerm_subnet.example.id
+  private_dns_zone_id           = azurerm_private_dns_zone.example.id
+  public_network_access_enabled = false
+  administrator_login           = var.postgres_server_admin_username
+  administrator_password        = var.postgres_server_admin_password
+  zone                          = "1"
 
-  administrator_login          = var.administrator_login
-  administrator_login_password = var.administrator_login_password
+  storage_mb   = 32768
+  storage_tier = "P30"
 
-  backup {
-    retention_days       = 7
-    geo_redundant_backup = "Disabled"
-  }
-
-  high_availability {
-    mode = "Disabled"
-  }
-
-  network {
-    public_network_access_enabled = true
-    delegated_subnet_id           = var.postgres_subnet_id
-  }
-
-  tags = var.tags
+  sku_name = "GP_Standard_D4s_v3"
+  depends_on = [azurerm_private_dns_zone_virtual_network_link.example]
 }
 
 resource "azurerm_postgresql_flexible_server_database" "this" {
