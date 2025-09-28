@@ -18,8 +18,8 @@ resource "azurerm_postgresql_flexible_server" "this" {
   administrator_login    = var.postgres_server_admin
   administrator_password = random_password.this.result
 
-  storage_mb   = 5120
-  storage_tier = "Standard"
+  storage_mb   = 32768
+  storage_tier = "P4"
 
   sku_name = "B_Standard_B1ms"
 }
