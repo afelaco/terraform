@@ -17,3 +17,9 @@ variable "tenant_id" {
   description = "The Tenant ID for the Key Vault."
   type        = string
 }
+
+variable "object_id" {
+  description = "The Object ID of the user or service principal to assign access policies."
+  type        = string
+  default     = "0a909171-669b-492b-bd9b-c1f777a42f23"
+}
