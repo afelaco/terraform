@@ -3,18 +3,17 @@ variable "storage_account_name" {
   type        = string
 }
 
+variable "storage_account_location" {
+  description = "The Azure region where the storage account will be created."
+  type        = string
+}
+
 variable "resource_group_name" {
   description = "The name of the resource group in which to create the storage account."
   type        = string
 }
 
-variable "location" {
-  description = "The Azure region where the storage account will be created."
+variable "key_vault_id" {
+  description = "The ID of the Key Vault where secrets will be stored."
   type        = string
-}
-
-variable "container_name" {
-  description = "List of storage container names to create within the storage account."
-  type        = list(string)
-  default     = ["steam"]
 }
