@@ -13,15 +13,9 @@ variable "postgres_server_location" {
   type        = string
 }
 
-variable "postgres_server_admin_username" {
-  description = "The administrator username for the PostgreSQL Flexible Server"
-  type        = string
-}
-
-variable "postgres_server_admin_password" {
-  description = "The administrator password for the PostgreSQL Flexible Server"
-  type        = string
-  sensitive   = true
+variable "key_vault_id" {
+    description = "The ID of the Key Vault to store the PostgreSQL admin password"
+    type        = string
 }
 
 variable "postgres_database_name" {

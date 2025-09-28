@@ -22,8 +22,8 @@ module "rg" {
 module "tf_backend" {
   source                   = "./modules/terraform_backend"
   storage_account_name     = "${var.project_name}tf"
-  resource_group_name      = module.rg.name
-  storage_account_location = module.rg.location
+  resource_group_name      = module.rg.resource_group_name
+  storage_account_location = module.rg.resource_group_location
 }
 
 # Storage Accounts
@@ -32,8 +32,8 @@ module "sa" {
 
   source                   = "./modules/storage_account"
   storage_account_name     = "${var.project_name}${each.key}sa"
-  resource_group_name      = module.rg.name
-  storage_account_location = module.rg.location
+  resource_group_name      = module.rg.resource_group_name
+  storage_account_location = module.rg.resource_group_location
 }
 
 # Key Vault
@@ -41,17 +41,16 @@ module "kv" {
   source              = "./modules/key_vault"
   key_vault_name      = "${var.project_name}-kv"
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  resource_group_name = module.rg.name
-  key_vault_location  = module.rg.location
+  resource_group_name = module.rg.resource_group_name
+  key_vault_location  = module.rg.resource_group_location
 }
 
 # PostgreSQL Flexible Server
 module "postgres" {
-  source                         = "./modules/postgres"
-  postgres_server_name           = "${var.project_name}-psql"
-  resource_group_name            = module.rg.name
-  postgres_server_location       = module.rg.location
-  postgres_server_admin_username = var.postgres_admin_username
-  postgres_server_admin_password = var.postgres_admin_password
-  postgres_database_name         = "${var.project_name}_db"
+  source                   = "./modules/postgres"
+  key_vault_id             = module.kv.key_vault_id
+  postgres_server_name     = "${var.project_name}-psql"
+  resource_group_name      = module.rg.resource_group_name
+  postgres_server_location = module.rg.resource_group_location
+  postgres_database_name   = "${var.project_name}_db"
 }

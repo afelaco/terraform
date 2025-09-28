@@ -1,26 +1,33 @@
+resource "random_password" "this" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+resource "azurerm_key_vault_secret" "this" {
+  name         = "POSTGRES-ADMIN-PASSWORD"
+  value        = random_password.this.result
+  key_vault_id = var.key_vault_id
+}
+
 resource "azurerm_postgresql_flexible_server" "this" {
-  name                          = var.postgres_server_name
-  resource_group_name           = var.resource_group_name
-  location                      = var.postgres_server_location
-  version                       = "12"
-  delegated_subnet_id           = azurerm_subnet.example.id
-  private_dns_zone_id           = azurerm_private_dns_zone.example.id
-  public_network_access_enabled = false
-  administrator_login           = var.postgres_server_admin_username
-  administrator_password        = var.postgres_server_admin_password
-  zone                          = "1"
+  name                   = var.postgres_server_name
+  resource_group_name    = var.resource_group_name
+  location               = var.postgres_server_location
+  version                = "14"
+  administrator_login    = "admin"
+  administrator_password = random_password.this.result
+  zone                   = "3"
 
   storage_mb   = 32768
   storage_tier = "P30"
 
   sku_name = "GP_Standard_D4s_v3"
-  depends_on = [azurerm_private_dns_zone_virtual_network_link.example]
 }
 
 resource "azurerm_postgresql_flexible_server_database" "this" {
-  name                = var.postgres_database_name
-  resource_group_name = var.resource_group_name
-  server_name         = azurerm_postgresql_flexible_server.this.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
+  name      = var.postgres_database_name
+  server_id = azurerm_postgresql_flexible_server.this.id
+  collation = "en_US.utf8"
+  charset   = "utf8"
 }
