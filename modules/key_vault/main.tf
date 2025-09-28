@@ -31,8 +31,8 @@ resource "azurerm_key_vault" "this" {
 }
 
 # Set external secrets.
-resource "azurerm_key_vault_secret" "external_secrets" {
-  for_each = var.external_secrets
+resource "azurerm_key_vault_secret" "this" {
+  for_each = toset(var.external_secrets)
 
   name         = each.key
   value        = each.value
