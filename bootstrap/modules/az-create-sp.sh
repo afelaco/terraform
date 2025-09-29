@@ -13,7 +13,7 @@ az ad sp create-for-rbac \
     --name "$AZ_SP_NAME" \
     --role Owner \
     --scopes "/subscriptions/$AZ_SUBSCRIPTION_ID" \
-    --sdk-auth > "$AZ_SP_CREDS_FILE"
+    --sdk-auth >"$AZ_SP_CREDS_FILE"
 
 echo "  ✅  Service Principal created and credentials saved to '$AZ_SP_CREDS_FILE'!"
 
