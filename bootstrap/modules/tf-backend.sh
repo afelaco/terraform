@@ -1,20 +1,34 @@
-##!/usr/bin/env bash
-#set -euo pipefail
-#
-#echo "Creating Terraform backend..."
-#az account set --subscription "$SUBSCRIPTION_ID"
-#az group create -n "$RESOURCE_GROUP" -l "$LOCATION" >/dev/null
-#
-#az storage account create \
-#  -n "$STORAGE_ACCOUNT" \
-#  -g "$RESOURCE_GROUP" \
-#  -l "$LOCATION" \
-#  --sku Standard_LRS >/dev/null
-#
-#ACCOUNT_KEY=$(az storage account keys list -g "$RESOURCE_GROUP" -n "$STORAGE_ACCOUNT" --query "[0].value" -o tsv)
-#az storage container create \
-#  --name "$CONTAINER_NAME" \
-#  --account-name "$STORAGE_ACCOUNT" \
-#  --account-key "$ACCOUNT_KEY" >/dev/null
-#
-#echo "✅ Terraform backend ready."
+# Create Resource Group
+az group create \
+  -n $TERRAFORM_BACKEND_RESOURCE_GROUP_NAME \
+  -l $TERRAFORM_BACKEND_RESOURCE_GROUP_LOCATION
+
+# Create Storage Account
+az storage account create \
+  -g $TERRAFORM_BACKEND_RESOURCE_GROUP_NAME \
+  -n $TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME \
+  -l $TERRAFORM_BACKEND_RESOURCE_GROUP_LOCATION \
+  --sku Standard_LRS
+
+# Get storage key
+ACCOUNT_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT --query "[0].value" -o tsv)
+
+# Create container
+az storage container create \
+  --account-name $TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME \
+  --account-key $ACCOUNT_KEY \
+  --name $TERRAFORM_BACKEND_CONTAINER_NAME
+
+# Write Terraform backend configuration to file
+cat > "$TERRAFORM_BACKEND_FILE" <<EOF
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "$TERRAFORM_BACKEND_RESOURCE_GROUP_NAME"
+    storage_account_name = "$TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME"
+    container_name       = "$TERRAFORM_BACKEND_CONTAINER_NAME"
+    key                  = "terraform.tfstate"
+  }
+}
+EOF
+
+echo "    ✅ Terraform backend configuration written to $BACKEND_FILE!"
