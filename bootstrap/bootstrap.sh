@@ -28,18 +28,18 @@ fi
 # Azure bootstrap: create Service Principal if not exists
 # -----------------------------
 echo "➡️ Running Azure bootstrap..."
-if [ ! -f "$AZ_SP_CREDENTIALS_FILE" ]; then
+if [ ! -f "$AZ_SP_CREDS_FILE" ]; then
     source "modules/az-create-sp.sh"
     echo "✅ Azure bootstrap complete!"
 else
-    echo "⚠️ Credentials already exist at $AZ_SP_CREDENTIALS_FILE!"
+    echo "⚠️ Credentials already exist at $AZ_SP_CREDS_FILE!"
 fi
 
 # -----------------------------
 # GitHub bootstrap: set SP credentials as secret
 # -----------------------------
 echo "➡️ Running GitHub bootstrap..."
-source "modules/gh-bootstrap.sh"
+source "modules/gh-set-secrets.sh"
 echo "✅ GitHub bootstrap complete!"
 
 # -----------------------------

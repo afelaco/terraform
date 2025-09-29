@@ -2,6 +2,7 @@ name: Plan & Apply Terraform Changes
 
 env:
   TERRAFORM_VERSION: 1.13.3
+  TF_VAR_external_secrets: ${{ secrets.EXTERNAL_SECRETS }}
 
 on:
   pull_request:
@@ -35,9 +36,7 @@ jobs:
       - name: Initialize Terraform
         run: terraform init
 
-      - name: Terraform Plan
-        env:
-          TF_VAR_external_secrets: ${{ secrets.EXTERNAL_SECRETS }}
+      - name: Plan Terraform Changes
         run: terraform plan -input=false -out=tfplan
 
       - name: Upload Terraform Plan as Artifact
@@ -78,9 +77,3 @@ jobs:
 
       - name: Apply Terraform Changes
         run: terraform apply -input=false tfplan
-
-      - name: Terraform Apply
-        env:
-          EXTERNAL_SECRETS: ${{ secrets.EXTERNAL_SECRETS }}
-        run: |
-          terraform apply -var="external_secrets=$EXTERNAL_SECRETS" -input=false tfplan
