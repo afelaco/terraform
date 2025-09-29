@@ -22,7 +22,7 @@ resource "azurerm_role_assignment" "sp" {
 
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Secrets Officer"
-  principal_id         = var.sp_object_id
+  principal_id         = var.sp_client_id
 }
 
 # Set external secrets.
