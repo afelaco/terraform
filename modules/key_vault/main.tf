@@ -10,12 +10,16 @@ resource "azurerm_key_vault" "this" {
 
 # Set roles for the Key Vault.
 resource "azurerm_role_assignment" "admin" {
+  depends_on = [azurerm_key_vault.this]
+
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Secrets Officer"
   principal_id         = var.admin_object_id
 }
 
 resource "azurerm_role_assignment" "sp" {
+  depends_on = [azurerm_key_vault.this]
+
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Secrets Officer"
   principal_id         = var.sp_object_id
