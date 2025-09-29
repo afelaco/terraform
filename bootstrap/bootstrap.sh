@@ -1,26 +1,59 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Load config
+# Load configuration
 source ".config.sh"
 
+# -----------------------------
 # Sync system environment with Brewfile
+# -----------------------------
 echo "➡️ Syncing system environment with Brewfile..."
 brew bundle --file=Brewfile
 
-# Declare and run bootstrap modules
-modules=(
-    "modules/git-config.sh"
-    "modules/az-bootstrap.sh"
-    "modules/gh-secret.sh"
-    "modules/tf-backend.sh"
-)
+# -----------------------------
+# Git bootstrap: set repo-level Git identity
+# -----------------------------
+echo "➡️ Running Git bootstrap..."
+CURRENT_NAME=$(git config --get user.name)
+CURRENT_EMAIL=$(git config --get user.email)
 
-# Run each module
-echo "➡️ Running bootstrap modules..."
-for module in "${modules[@]}"; do
-    echo "  ➡️ Running $(basename "$module")..."
-    source "$module"
-done
+if [ "$CURRENT_NAME" != "$GIT_NAME" ] || [ "$CURRENT_EMAIL" != "$GIT_EMAIL" ]; then
+    source "modules/git-set-config.sh"
+    echo "✅ Git bootstrap complete!"
+else
+    echo "ℹ️ Git identity already set."
+fi
 
+# -----------------------------
+# Azure bootstrap: create Service Principal if not exists
+# -----------------------------
+echo "➡️ Running Azure bootstrap..."
+if [ ! -f "$AZ_SP_CREDENTIALS_FILE" ]; then
+    source "modules/az-create-sp.sh"
+    echo "✅ Azure bootstrap complete!"
+else
+    echo "ℹ️ Credentials already exist at $AZ_SP_CREDENTIALS_FILE!"
+fi
+
+# -----------------------------
+# GitHub bootstrap: set SP credentials as secret
+# -----------------------------
+echo "➡️ Running GitHub bootstrap..."
+source "modules/gh-bootstrap.sh"
+echo "✅ GitHub bootstrap complete!"
+
+# -----------------------------
+# Terraform bootstrap: create backend if not exists
+# -----------------------------
+echo "➡️ Running Terraform bootstrap..."
+if [ ! -f "$TF_BE_CONFIG_FILE" ]; then
+    source "modules/tf-create-backend.sh"
+    echo "✅ Terraform bootstrap complete!"
+else
+    echo "ℹ️ Terraform backend configuration already exists at $TF_BE_CONFIG_FILE!"
+fi
+
+# -----------------------------
+# Bootstrap complete
+# -----------------------------
 echo "✅ Bootstrap complete!"
