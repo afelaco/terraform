@@ -28,8 +28,6 @@ variable "admin_object_id" {
 variable "sp_object_id" {
   description = "The Object ID of the admin to assign roles."
   type        = string
-  default     = "a849bf89-a468-4787-8121-af95350f41eb"
-  sensitive   = true
 }
 
 variable "external_secrets" {

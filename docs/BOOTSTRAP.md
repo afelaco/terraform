@@ -32,26 +32,6 @@ The token is then stored in `config.sh` as `GITHUB_TOKEN`.
 
 ---
 
-# Azure
-
-> When a new Service Principal is created, both a Service Principal Object and an Application Object are created with
-> different IDs. The Service Principal Object ID required to set permissions in the Key Vault is found under Enterprise
-> Applications in the Azure Portal!
-
-Once the Service Principal is created via the bootstrap script, find its Object ID under Enterprise Applications in the
-Azure Portal and copy its value as a `sp_object_id` sensitive variable in `.modules/key_vault/variables.tf` file:
-
-```hcl
-variable "object_id" {
-  description = "Object ID of the service principal"
-  type        = string
-  default     = "00000000-0000-0000-0000-000000000000"
-  sensitive   = true
-}
-```
-
----
-
 # Docs
 
 > [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile).
