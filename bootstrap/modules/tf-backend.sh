@@ -11,12 +11,14 @@ az storage account create \
   --sku Standard_LRS
 
 # Get storage key
-ACCOUNT_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT --query "[0].value" -o tsv)
+TERRAFORM_BACKEND_STORAGE_ACCOUNT_ACCOUNT_KEY=$(az storage account keys list \
+  -g $TERRAFORM_BACKEND_RESOURCE_GROUP_NAME \
+  -n $TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)
 
 # Create container
 az storage container create \
   --account-name $TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME \
-  --account-key $ACCOUNT_KEY \
+  --account-key $TERRAFORM_BACKEND_STORAGE_ACCOUNT_ACCOUNT_KEY \
   --name $TERRAFORM_BACKEND_CONTAINER_NAME
 
 # Write Terraform backend configuration to file
@@ -31,4 +33,4 @@ terraform {
 }
 EOF
 
-echo "    ✅ Terraform backend configuration written to $BACKEND_FILE!"
+echo "    ✅ Terraform backend configuration written to $TERRAFORM_BACKEND_FILE!"

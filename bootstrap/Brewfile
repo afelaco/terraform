@@ -3,5 +3,3 @@ brew "azure-cli"
 brew "gh"
 brew "git"
 brew "jq"
-
-# brew "terraform"

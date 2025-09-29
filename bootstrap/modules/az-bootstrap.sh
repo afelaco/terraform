@@ -1,13 +1,19 @@
-submodules=(
-    "azure/az-login-admin.sh"
-    "azure/az-create-sp.sh"
-    "azure/az-login-sp.sh"
-)
+# Check if Azure credentials exists, otherwise run the sub-modules
+if [ ! -f "$AZURE_SP_FILE" ]; then
+    # Declare and run Azure sub-modules
+        submodules=(
+        "modules/azure/az-login-admin.sh"
+        "modules/azure/az-create-sp.sh"
+        "modules/azure/az-login-sp.sh"
+    )
 
-echo "➡️ Running Azure sub-modules..."
-for submodule in "${submodules[@]}"; do
-    echo "  ➡️ Running $(basename "$submodule")..."
-    source "$submodule"
-done
+    echo "    ➡️ Running Azure sub-modules..."
+    for submodule in "${submodules[@]}"; do
+        echo "  ➡️ Running $(basename "$submodule")..."
+        source "$submodule"
+    done
 
-echo "✅ Azure setup complete!"
+    echo "    ✅ Azure bootstrap complete!"
+else
+    echo "    ℹ️ Credentials already exist at $AZURE_SP_FILE!"
+fi
