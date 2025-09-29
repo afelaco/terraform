@@ -25,7 +25,7 @@ variable "tenant_id" {
 variable "object_id" {
   description = "Object ID of the service principal"
   type        = string
-  default     = "09d6b289-bb26-4371-9906-73885b0431d0"
+  default     = "50e3b1f7-6841-43d4-ac0f-5931b64c9c03"
 }
 
 variable "layer" {

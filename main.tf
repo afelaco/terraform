@@ -39,8 +39,6 @@ module "sa" {
 
 # PostgreSQL Flexible Server
 module "pg" {
-  depends_on = [module.kv]
-
   source                           = "./modules/postgres"
   postgres_server_name             = "${var.project_name}-pg"
   postgres_server_location         = module.rg.resource_group_location
