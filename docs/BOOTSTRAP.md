@@ -15,3 +15,17 @@ It is required to manually create a [GitHub Personal Access Token (PAT)](https:/
 - `read:org`
 
 The token is then stored in `config.sh` as `GITHUB_TOKEN`.
+
+# Azure
+
+Once the Service Principal is created via the bootstrap script, find its Object ID in the Azure Portal and copy its value 
+as an `object_id` sensitive variable in `./variables.tf` file:
+
+```hcl
+variable "object_id" {
+  description = "Object ID of the service principal"
+  type        = string
+  default     = <AZ_SP_OBJECT_ID>
+  sensitive   = true
+}
+```
