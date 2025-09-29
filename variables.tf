@@ -20,7 +20,7 @@ variable "tenant_id" {
 variable "object_id" {
   description = "Object ID of the service principal"
   type        = string
-  default     = "05afc1fa-af1e-42cb-96ea-2cb12e3691f1"
+  default     = "09d6b289-bb26-4371-9906-73885b0431d0"
   sensitive   = true
 }
 
