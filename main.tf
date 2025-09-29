@@ -1,7 +1,6 @@
 # Get current client details
 data "azurerm_client_config" "current" {}
 
-
 # Terraform Backend Configuration
 terraform {
   backend "azurerm" {
@@ -17,14 +16,6 @@ module "rg" {
   source                  = "./modules/resource_group"
   resource_group_name     = "${var.project_name}-rg"
   resource_group_location = var.location
-}
-
-# Terraform Backend Infrastructure
-module "tf_backend" {
-  source                   = "./modules/terraform_backend"
-  storage_account_name     = "${var.project_name}tf"
-  resource_group_name      = module.rg.resource_group_name
-  storage_account_location = module.rg.resource_group_location
 }
 
 # Key Vault
@@ -51,6 +42,8 @@ module "sa" {
 
 # PostgreSQL Flexible Server
 module "pg" {
+  depends_on = [module.kv]
+
   source                           = "./modules/postgres"
   postgres_server_name             = "${var.project_name}-pg"
   postgres_server_location         = module.rg.resource_group_location
