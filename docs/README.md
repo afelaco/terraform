@@ -127,7 +127,7 @@ Suppose you originally had:
 
 ```tf
 module "old_storage" {
-  source              = "./modules/storage_account"
+  source              = "../modules/storage_account"
   name                = "myprojectsa"
   resource_group_name = module.rg.name
   location            = module.rg.location
