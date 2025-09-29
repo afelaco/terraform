@@ -21,7 +21,7 @@ if [ "$CURRENT_NAME" != "$GIT_NAME" ] || [ "$CURRENT_EMAIL" != "$GIT_EMAIL" ]; t
     source "modules/git-set-config.sh"
     echo "✅ Git bootstrap complete!"
 else
-    echo "ℹ️ Git identity already set."
+    echo "⚠️ Git identity already set."
 fi
 
 # -----------------------------
@@ -32,7 +32,7 @@ if [ ! -f "$AZ_SP_CREDENTIALS_FILE" ]; then
     source "modules/az-create-sp.sh"
     echo "✅ Azure bootstrap complete!"
 else
-    echo "ℹ️ Credentials already exist at $AZ_SP_CREDENTIALS_FILE!"
+    echo "⚠️ Credentials already exist at $AZ_SP_CREDENTIALS_FILE!"
 fi
 
 # -----------------------------
@@ -50,7 +50,7 @@ if [ ! -f "$TF_BE_CONFIG_FILE" ]; then
     source "modules/tf-create-backend.sh"
     echo "✅ Terraform bootstrap complete!"
 else
-    echo "ℹ️ Terraform backend configuration already exists at $TF_BE_CONFIG_FILE!"
+    echo "⚠️ Terraform backend configuration already exists at $TF_BE_CONFIG_FILE!"
 fi
 
 # -----------------------------
