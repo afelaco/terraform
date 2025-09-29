@@ -8,6 +8,13 @@ resource "azurerm_key_vault" "this" {
   enable_rbac_authorization = true
 }
 
+# Set roles for the Key Vault.
+resource "azurerm_role_assignment" "this" {
+  scope                = azurerm_key_vault.this.id
+  role_definition_name = "Key Vault Secrets Officer"
+  principal_id         = var.admin_object_id
+}
+
 # Set external secrets.
 resource "azurerm_key_vault_secret" "this" {
   for_each = var.external_secrets
