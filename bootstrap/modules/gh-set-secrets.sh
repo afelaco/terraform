@@ -18,8 +18,8 @@ echo "  ✅ Secret '$GH_SP_CREDS_SECRET' set in GitHub Actions!"
 # -----------------------------
 echo "  ➡️ Uploading Azure Service Principal Object ID to GitHub Actions as '$GH_SP_OID_SECRET'..."
 gh secret set "$GH_SP_OID_SECRET" \
-  --repo "$GH_REPO" \
-  --body "$(jq -c '.azure_sp_object_id' "$TF_VARS_FILE")"
+    --repo "$GH_REPO" \
+    --body "$(jq -c '.sp_object_id' "$TF_VARS_FILE")"
 
 echo "  ✅ Secret '$GH_SP_OID_SECRET' set in GitHub Actions!"
 
@@ -28,7 +28,7 @@ echo "  ✅ Secret '$GH_SP_OID_SECRET' set in GitHub Actions!"
 # -----------------------------
 echo "  ➡️ Uploading external secrets to GitHub Actions as '$GH_EXT_SECRET'..."
 gh secret set "$GH_EXT_SECRET" \
-  --repo "$GH_REPO" \
-  --body "$(jq -c '.external_secrets' "$TF_VARS_FILE")"
+    --repo "$GH_REPO" \
+    --body "$(jq -c '.external_secrets' "$TF_VARS_FILE")"
 
 echo "  ✅ Secret '$GH_EXT_SECRET' set in GitHub Actions!"
