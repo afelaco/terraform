@@ -2,7 +2,6 @@ name: Plan & Apply Terraform Changes
 
 env:
   TERRAFORM_VERSION: 1.13.3
-  TF_VAR_sp_object_id: ${{ secrets.TF_VAR_SP_OBJECT_ID }}
   TF_VAR_external_secrets: ${{ secrets.TF_VAR_EXTERNAL_SECRETS }}
 
 on:
