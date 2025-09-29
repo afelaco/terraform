@@ -25,10 +25,10 @@ variable "admin_object_id" {
   sensitive   = true
 }
 
-variable "sp_client_id" {
+variable "sp_object_id" {
   description = "The Object ID of the admin to assign roles."
   type        = string
-  default     = "14c97788-02c2-47f4-a0f3-4430805e06c4"
+  default     = "24bc5c34-b0c8-4e78-a3a6-a131ba956c32"
   sensitive   = true
 }
 
