@@ -1,5 +1,5 @@
 # Boostrap config files
-bootstrap/artifacts/.azure-credentials.json
+bootstrap/artifacts/.az-credentials.json
 bootstrap/.config.sh
 
 # Local .terraform directories
