@@ -6,12 +6,12 @@ az login
 echo "  ✅ Azure CLI login successful!"
 
 # -----------------------------
-# Create the Service Principal with Contributor role and save credentials
+# Create the Service Principal with Owner role and save credentials
 # -----------------------------
 echo "  ➡️ Creating Azure Service Principal: $AZ_SP_NAME..."
 az ad sp create-for-rbac \
     --name "$AZ_SP_NAME" \
-    --role Contributor \
+    --role Owner \
     --scopes /subscriptions/"$AZ_SUBSCRIPTION_ID" \
     --sdk-auth > "$AZ_SP_CREDS_FILE"
 
