@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Load config
-source "config.sh"
+source ".config.sh"
 
 # Sync system environment with Brewfile
 echo "➡️ Syncing system environment with Brewfile..."
