@@ -34,7 +34,7 @@ az role assignment create \
 echo "➡️ Assigning Key Vault Contributor role to Service Principal $AZ_SP_NAME..."
 az role assignment create \
     --assignee "$AZ_SP_APP_ID" \
-    --role "Key Vault Officer" \
+    --role "Key Vault Secrets Officer" \
     --scope /subscriptions/"$AZ_SUBSCRIPTION_ID"
 
 echo "✅ Service Principal roles assigned!"
