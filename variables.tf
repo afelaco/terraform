@@ -26,11 +26,11 @@ variable "tenant_id" {
 
 variable "layer" {
   description = "List of storage account layers"
-  type = list(string)
-  default = ["bronze", "silver", "gold"]
+  type        = list(string)
+  default     = ["bronze", "silver", "gold"]
 }
 
 variable "external_secrets" {
   description = "Map of external secrets to store in Key Vault"
-  type = map(string)
+  type        = map(string)
 }
