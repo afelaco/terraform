@@ -34,9 +34,6 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Test
-        run: echo ${{ env.TF_VAR_sp_object_id }}
-
       - name: Initialize Terraform
         run: terraform init
 
