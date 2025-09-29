@@ -24,6 +24,6 @@ echo "  ➡️  Fetching Service Principal Object ID..."
 AZ_SP_OBJECT_ID=$(az ad sp list --display-name "$AZ_SP_NAME" --query "[].id" -o tsv)
 
 echo "  ➡️  Updating $TF_VARS_FILE with Service Principal Object ID..."
-jq --arg spid "$AZ_SP_OBJECT_ID" '.azure_sp_object_id = $spid' "$TF_VARS_FILE" | sponge "$TF_VARS_FILE"
+jq --arg spid "$AZ_SP_OBJECT_ID" '.sp_object_id = $spid' "$TF_VARS_FILE" | sponge "$TF_VARS_FILE"
 
 echo "  ✅  $TF_VARS_FILE updated with Azure Service Principal Object ID!"
