@@ -36,7 +36,7 @@ else
 fi
 
 # -----------------------------
-# GitHub bootstrap: set SP credentials as secret
+# GitHub bootstrap: set GitHub Actions secrets
 # -----------------------------
 echo "➡️ Running GitHub bootstrap..."
 source "modules/gh-set-secrets.sh"
