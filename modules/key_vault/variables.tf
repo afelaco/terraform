@@ -26,6 +26,5 @@ variable "object_id" {
 variable "external_secrets" {
   description = "All external secrets to sync to Key Vault"
   type = map(string)
-  sensitive   = true
 }
 
