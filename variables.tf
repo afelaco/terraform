@@ -24,13 +24,6 @@ variable "tenant_id" {
   sensitive   = true
 }
 
-variable "object_id" {
-  description = "Object ID of the service principal"
-  type        = string
-  default     = "50e3b1f7-6841-43d4-ac0f-5931b64c9c03"
-  sensitive   = true
-}
-
 variable "layer" {
   description = "List of storage account layers"
   type = list(string)

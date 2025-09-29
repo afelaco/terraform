@@ -22,7 +22,6 @@ module "kv" {
   key_vault_location  = module.rg.resource_group_location
   resource_group_name = module.rg.resource_group_name
   tenant_id           = var.tenant_id
-  object_id           = var.object_id
   external_secrets    = var.external_secrets
 }
 
