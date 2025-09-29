@@ -21,6 +21,6 @@
 ## Fetch and save the Service Principal Object ID to a text file
 ## -----------------------------
 echo "  ➡️  Fetching Service Principal Object ID..."
-az ad sp list --display-name "$AZ_SP_NAME" --query "[].id" -o tsv > "$AZ_SP_OBJECT_ID_FILE"
+az ad sp list --display-name "$AZ_SP_NAME" --query "[].id" -o tsv >"$AZ_SP_OBJECT_ID_FILE"
 
 echo "  ✅  Azure Service Principal Object ID written to $AZ_SP_OBJECT_ID_FILE!"
