@@ -1,5 +1,5 @@
 # Check if Azure credentials exists, otherwise run the sub-modules
-if [ ! -f "$AZURE_SP_FILE" ]; then
+if [ ! -f "$AZ_SP_CREDENTIALS_FILE" ]; then
     # Declare and run Azure sub-modules
         submodules=(
         "modules/azure/az-login-admin.sh"
@@ -15,5 +15,5 @@ if [ ! -f "$AZURE_SP_FILE" ]; then
 
     echo "    ✅ Azure bootstrap complete!"
 else
-    echo "    ℹ️ Credentials already exist at $AZURE_SP_FILE!"
+    echo "    ℹ️ Credentials already exist at $AZ_SP_CREDENTIALS_FILE!"
 fi

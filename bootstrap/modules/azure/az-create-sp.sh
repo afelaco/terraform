@@ -1,9 +1,9 @@
 # Create the Service Principal with Contributor role and save JSON credentials
-echo "    ➡️ Creating Azure Service Principal $AZURE_SP_NAME..."
+echo "    ➡️ Creating Azure Service Principal $AZ_SP_NAME..."
 az ad sp create-for-rbac \
-    --name "$AZURE_SP_NAME" \
+    --name "$AZ_SP_NAME" \
     --role Contributor \
-    --scopes /subscriptions/"$AZURE_SUBSCRIPTION_ID" \
-    --sdk-auth > "$AZURE_SP_FILE"
+    --scopes /subscriptions/"$AZ_SUBSCRIPTION_ID" \
+    --sdk-auth > "$AZ_SP_CREDENTIALS_FILE"
 
-echo "    ✅ Service Principal created and credentials saved to $AZURE_SP_FILE!"
+echo "    ✅ Service Principal created and credentials saved to $AZ_SP_CREDENTIALS_FILE!"

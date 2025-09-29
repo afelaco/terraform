@@ -12,7 +12,7 @@ brew bundle --file=Brewfile
 modules=(
     "modules/git-config.sh"
     "modules/az-bootstrap.sh"
-    "modules/gh-bootstrap.sh"
+    "modules/gh-secret.sh"
     "modules/tf-backend.sh"
 )
 

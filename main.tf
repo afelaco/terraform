@@ -5,8 +5,8 @@ data "azurerm_client_config" "current" {}
 # Terraform Backend Configuration
 terraform {
   backend "azurerm" {
-    resource_group_name  = "homeauto-rg"
-    storage_account_name = "homeautotf"
+    resource_group_name  = "tfstate-rg"
+    storage_account_name = "homeautotfstatesa"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
