@@ -25,6 +25,13 @@ variable "admin_object_id" {
   sensitive   = true
 }
 
+variable "sp_object_id" {
+  description = "The Object ID of the admin to assign roles."
+  type        = string
+  default     = "50a9ab64-15ca-4290-ab17-73fcc6adc419"
+  sensitive   = true
+}
+
 variable "external_secrets" {
   description = "All external secrets to sync to Key Vault"
   type = map(string)

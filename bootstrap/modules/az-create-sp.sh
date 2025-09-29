@@ -11,30 +11,8 @@ echo "  ✅ Azure CLI login successful!"
 echo "  ➡️ Creating Azure Service Principal: $AZ_SP_NAME..."
 az ad sp create-for-rbac \
     --name "$AZ_SP_NAME" \
+    --role Contributor \
+    --scopes /subscriptions/"$AZ_SUBSCRIPTION_ID" \
     --sdk-auth > "$AZ_SP_CREDS_FILE"
 
-echo "  ✅ Service Principal $AZ_SP_NAME created and credentials saved to $AZ_SP_CREDS_FILE!"
-
-# -----------------------------
-# Assign roles to the Service Principal
-# -----------------------------
-echo "  ➡️ Assigning roles to Service Principal..."
-
-# Extract SP appId from JSON
-AZ_SP_APP_ID=$(jq -r '.clientId' < "$AZ_SP_CREDS_FILE")
-
-# 2️⃣ Assign Contributor role for creating resources
-echo "➡️ Assigning Contributor role to Service Principal $AZ_SP_NAME..."
-az role assignment create \
-    --assignee "$AZ_SP_APP_ID" \
-    --role "Contributor" \
-    --scope /subscriptions/"$AZ_SUBSCRIPTION_ID"
-
-# 3️⃣ Assign Key Vault Contributor role for creating secrets
-echo "➡️ Assigning Key Vault Secrets Officer role to Service Principal $AZ_SP_NAME..."
-az role assignment create \
-    --assignee "$AZ_SP_APP_ID" \
-    --role "Key Vault Secrets Officer" \
-    --scope /subscriptions/"$AZ_SUBSCRIPTION_ID"
-
-echo "✅ Service Principal roles assigned!"
+echo "  ✅ Service Principal created and credentials saved to $AZ_SP_CREDS_FILE!"

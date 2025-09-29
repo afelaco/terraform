@@ -27,6 +27,8 @@ module "kv" {
 
 # Storage Accounts
 module "sa" {
+  depends_on = [module.kv]
+
   for_each = toset(var.layer)
 
   source                   = "./modules/storage_account"
@@ -38,6 +40,8 @@ module "sa" {
 
 # PostgreSQL Flexible Server
 module "pg" {
+  depends_on = [module.kv]
+
   source                           = "./modules/postgres"
   postgres_server_name             = "${var.project_name}-pg"
   postgres_server_location         = module.rg.resource_group_location

@@ -35,8 +35,7 @@ The token is then stored in `config.sh` as `GITHUB_TOKEN`.
 # Azure
 
 Once the Service Principal is created via the bootstrap script, find its Object ID in the Azure Portal and copy its
-value
-as an `object_id` sensitive variable in `./variables.tf` file:
+value as a `sp_object_id` sensitive variable in `.modules/key_vault/variables.tf` file:
 
 ```hcl
 variable "object_id" {

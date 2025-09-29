@@ -19,7 +19,7 @@ az storage account create \
 # -----------------------------
 # Get Storage Account key
 # -----------------------------
-echo "  ➡️ Fetching Storage Account key..."
+echo "  ➡️ Getting Storage Account key..."
 TF_BE_SA_KEY=$(az storage account keys list \
   --resource-group "$TF_BE_RG" \
   --account-name "$TF_BE_SA" \
