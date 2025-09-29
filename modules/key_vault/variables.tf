@@ -18,12 +18,7 @@ variable "tenant_id" {
   type        = string
 }
 
-variable "user_object_id" {
-  description = "The Object ID of the user or service principal to assign access policies."
-  type        = string
-}
-
-variable "sp_object_id" {
+variable "object_id" {
   description = "The Object ID of the user or service principal to assign access policies."
   type        = string
 }

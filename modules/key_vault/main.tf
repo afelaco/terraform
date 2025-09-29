@@ -6,23 +6,10 @@ resource "azurerm_key_vault" "this" {
 
   sku_name = "standard"
 
-  # Set access policy for the user account.
-  access_policy {
-    tenant_id = var.tenant_id
-    object_id = var.user_object_id
-    secret_permissions = [
-      "Get",
-      "List",
-      "Set",
-      "Delete",
-      "Purge",
-    ]
-  }
-
   # Set access policy for the service principal.
   access_policy {
     tenant_id = var.tenant_id
-    object_id = var.sp_object_id
+    object_id = var.object_id
     secret_permissions = [
       "Get",
       "Set",

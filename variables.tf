@@ -16,24 +16,6 @@ variable "layer" {
   default = ["bronze", "silver", "gold"]
 }
 
-variable "tenant_id" {
-  description = "The Tenant ID for the Key Vault."
-  type        = string
-  sensitive   = true
-}
-
-variable "user_object_id" {
-  description = "The Object ID of the user or service principal to assign access policies."
-  type        = string
-  sensitive   = true
-}
-
-variable "sp_object_id" {
-  description = "The Object ID of the user or service principal to assign access policies."
-  type        = string
-  sensitive   = true
-}
-
 variable "external_secrets" {
   description = "Map of external secrets to store in Key Vault"
   type = map(string)

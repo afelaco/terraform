@@ -1,5 +1,6 @@
 # Brewfile
+brew "azure-cli"
 brew "git"
+
 # brew "gh"
-# brew "azure-cli"
 # brew "terraform"

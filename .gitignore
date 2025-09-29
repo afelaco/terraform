@@ -1,5 +1,6 @@
 # Boostrap config files
-.bootstrap/config.sh
+bootstrap/config.sh
+bootstrap/artifacts
 
 # Local .terraform directories
 .terraform/
