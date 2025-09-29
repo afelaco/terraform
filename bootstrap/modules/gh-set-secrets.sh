@@ -16,11 +16,9 @@ echo "  ✅ Secret '$GH_SP_CREDS_SECRET' set in GitHub Actions!"
 # -----------------------------
 # Set the terraform.tfvars.json content as a GitHub Actions secret
 # -----------------------------
-TFVARS_JSON=$(cat terraform.tfvars.json)
-
-# Create or update GitHub Actions secret
+echo "  ➡️ Uploading terraform.tfvars.json content to GitHub Actions as '$GH_EXT_SECRET'..."
 gh secret set "$GH_EXT_SECRET" \
   --repo "$GH_REPO" \
-  --body "$TFVARS_JSON"
+  --body "$(cat ../terraform.tfvars.json)"
 
 echo "  ✅ Secret '$GH_EXT_SECRET' set in GitHub Actions!"
