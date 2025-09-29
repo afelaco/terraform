@@ -14,16 +14,6 @@ gh secret set "$GH_SP_CREDS_SECRET" \
 echo "  ✅ Secret '$GH_SP_CREDS_SECRET' set in GitHub Actions!"
 
 # -----------------------------
-# Set the Azure Service Principal Object ID as a GitHub Actions secret
-# -----------------------------
-echo "  ➡️ Uploading Azure Service Principal Object ID to GitHub Actions as '$GH_SP_OID_SECRET'..."
-gh secret set "$GH_SP_OID_SECRET" \
-    --repo "$GH_REPO" \
-    --body "$(jq -c '.sp_object_id' "$TF_VARS_FILE")"
-
-echo "  ✅ Secret '$GH_SP_OID_SECRET' set in GitHub Actions!"
-
-# -----------------------------
 # Set the terraform.tfvars.json content as a GitHub Actions secret
 # -----------------------------
 echo "  ➡️ Uploading external secrets to GitHub Actions as '$GH_EXT_SECRET'..."

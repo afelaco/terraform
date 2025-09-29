@@ -18,12 +18,9 @@ az ad sp create-for-rbac \
 echo "  ✅  Service Principal created and credentials saved to '$AZ_SP_CREDS_FILE'!"
 
 # -----------------------------
-# Update terraform.tfvars.json with the Service Principal Object ID
+# Fetch and save the Service Principal Object ID to a text file
 # -----------------------------
 echo "  ➡️  Fetching Service Principal Object ID..."
-AZ_SP_OBJECT_ID=$(az ad sp list --display-name "$AZ_SP_NAME" --query "[].id" -o tsv)
+az ad sp list --display-name "$AZ_SP_NAME" --query "[].id" -o tsv > "$AZ_SP_OBJECT_ID_FILE"
 
-echo "  ➡️  Updating $TF_VARS_FILE with Service Principal Object ID..."
-jq --arg spid "$AZ_SP_OBJECT_ID" '.sp_object_id = $spid' "$TF_VARS_FILE" | sponge "$TF_VARS_FILE"
-
-echo "  ✅  $TF_VARS_FILE updated with Azure Service Principal Object ID!"
+echo "  ✅  Azure Service Principal Object ID written to $AZ_SP_OBJECT_ID_FILE!"
