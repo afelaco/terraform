@@ -24,7 +24,12 @@ variable "tenant_id" {
   sensitive   = true
 }
 
-variable "layer" {
+variable "sp_object_id" {
+  description = "The Object ID of the admin to assign roles."
+  type        = string
+}
+
+variable "layers" {
   description = "List of storage account layers"
   type        = list(string)
   default     = ["bronze", "silver", "gold"]

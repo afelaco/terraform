@@ -23,8 +23,7 @@ echo "  ✅  Service Principal created and credentials saved to '$AZ_SP_CREDS_FI
 echo "  ➡️  Fetching Service Principal Object ID..."
 AZ_SP_OBJECT_ID=$(az ad sp list --display-name "$AZ_SP_NAME" --query "[].id" -o tsv)
 
-echo "  ➡️  Updating terraform.tfvars.json with SP Object ID..."
-jq --arg spid "$AZ_SP_OBJECT_ID" '.azure_sp_object_id = $spid' terraform.tfvars.json \
-    > terraform.tfvars.tmp.json && mv terraform.tfvars.tmp.json terraform.tfvars.json
+echo "  ➡️  Updating $TF_VARS_FILE with Service Principal Object ID..."
+jq --arg spid "$AZ_SP_OBJECT_ID" '.azure_sp_object_id = $spid' "$TF_VARS_FILE" | sponge "$TF_VARS_FILE"
 
-echo "  ✅  terraform.tfvars.json updated with Azure SP Object ID!"
+echo "  ✅  $TF_VARS_FILE updated with Azure Service Principal Object ID!"
