@@ -18,7 +18,7 @@ CURRENT_NAME=$(git config --get user.name)
 CURRENT_EMAIL=$(git config --get user.email)
 
 if [ "$CURRENT_NAME" != "$GIT_NAME" ] || [ "$CURRENT_EMAIL" != "$GIT_EMAIL" ]; then
-    source "modules/git-set-config.sh"
+    source "modules/git-config.sh"
     echo "✅ Git bootstrap complete!"
 else
     echo "⚠️ Git identity already set."
@@ -29,7 +29,7 @@ fi
 # -----------------------------
 echo "➡️ Running Azure bootstrap..."
 if [ ! -f "$AZ_SP_CREDS_FILE" ]; then
-    source "modules/az-create-sp.sh"
+    source "modules/az-sp.sh"
     echo "✅ Azure bootstrap complete!"
 else
     echo "⚠️ Credentials already exist at $AZ_SP_CREDS_FILE!"
@@ -39,7 +39,7 @@ fi
 # GitHub bootstrap: set GitHub Actions secrets
 # -----------------------------
 echo "➡️ Running GitHub bootstrap..."
-source "modules/gh-set-secrets.sh"
+source "modules/gh-secrets.sh"
 echo "✅ GitHub bootstrap complete!"
 
 # -----------------------------
@@ -47,7 +47,7 @@ echo "✅ GitHub bootstrap complete!"
 # -----------------------------
 echo "➡️ Running Terraform bootstrap..."
 if [ ! -f "$TF_BE_CONFIG_FILE" ]; then
-    source "modules/tf-create-backend.sh"
+    source "modules/tf-backend.sh"
     echo "✅ Terraform bootstrap complete!"
 else
     echo "⚠️ Terraform backend configuration already exists at $TF_BE_CONFIG_FILE!"
