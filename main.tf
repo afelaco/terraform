@@ -39,14 +39,14 @@ module "sa" {
 }
 
 # PostgreSQL Flexible Server
-module "pg" {
-  depends_on = [module.kv]
-
-  source                           = "./modules/postgres"
-  postgres_server_name             = "${var.project_name}-pg"
-  postgres_server_location         = module.rg.resource_group_location
-  resource_group_name              = module.rg.resource_group_name
-  postgres_database_admin_username = "${var.project_name}_pg_admin"
-  postgres_database_name           = "${var.project_name}_db"
-  key_vault_id                     = module.kv.key_vault_id
-}
+# module "pg" {
+#   depends_on = [module.kv]
+#
+#   source                           = "./modules/postgres"
+#   postgres_server_name             = "${var.project_name}-pg"
+#   postgres_server_location         = module.rg.resource_group_location
+#   resource_group_name              = module.rg.resource_group_name
+#   postgres_database_admin_username = "${var.project_name}_pg_admin"
+#   postgres_database_name           = "${var.project_name}_db"
+#   key_vault_id                     = module.kv.key_vault_id
+# }
